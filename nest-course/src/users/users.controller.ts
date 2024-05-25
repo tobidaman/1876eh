@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, Post, Request, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UsersService } from './users.service';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -50,5 +50,13 @@ export class UsersController {
         return this.usersService.ban(dto);
     }
 
-    
+    @ApiOperation({ summary: 'Добавить имя' })
+    @ApiResponse({ status: 200 })
+    // @Roles('USER')
+    @UseGuards(JwtAuthGuard)
+    @Post('/name')
+    addName(@Body() body, @Request() req) {
+        const userId = req.body.user.id;
+        return this.usersService.addName(body, userId);
+    }
 }

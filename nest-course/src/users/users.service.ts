@@ -50,4 +50,14 @@ export class UsersService {
         await user.save();
         return user;
     }
+
+    async addName(body, userId: number) { // Обновленная функция
+        const user = await this.userRepository.findByPk(userId);
+        if (!user) {
+            throw new HttpException('Пользователь не найден', HttpStatus.NOT_FOUND);
+        }
+        user.name = body.name;
+        await user.save();
+        return user;
+    }
 }
