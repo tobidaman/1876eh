@@ -3,7 +3,7 @@ import { Table, Column, Model, DataType, PrimaryKey } from 'sequelize-typescript
 @Table({ tableName: 'products' })
 export class Product extends Model {
   @PrimaryKey
-  @Column(DataType.INTEGER)
+  @Column({type: DataType.INTEGER, unique: true, autoIncrement: true, primaryKey: true})
   id: number;
 
   @Column(DataType.STRING)
